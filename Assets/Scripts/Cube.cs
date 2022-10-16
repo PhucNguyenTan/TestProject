@@ -34,14 +34,14 @@ namespace UniRx
 
         private void OnEnable()
         {
-            ButtonColor.OnClickColor += ChangeColor;
-            InputHandler.OnMouseDoubleClick += ChangeSize;
+            Cell.OnClickColor += ChangeColor;
+            //InputHandler.OnMouseDoubleClick += ChangeSize;
         }
 
         private void OnDisable()
         {
-            ButtonColor.OnClickColor -= ChangeColor;
-            InputHandler.OnMouseDoubleClick -= ChangeSize;
+            Cell.OnClickColor -= ChangeColor;
+            //InputHandler.OnMouseDoubleClick -= ChangeSize;
         }
 
         void ChangeColor(Color color)

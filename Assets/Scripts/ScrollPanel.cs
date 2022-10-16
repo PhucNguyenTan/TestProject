@@ -33,7 +33,6 @@ public class ScrollPanel : MonoBehaviour
 
     private void OnDisable()
     {
-
         UI.OnBtnCubePress -= EnableCubeContent;
         UI.OnBtnSpherePress -= EnableSphereContent;
     }
