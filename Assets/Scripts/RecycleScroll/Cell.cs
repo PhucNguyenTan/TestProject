@@ -14,17 +14,22 @@ public class Cell : MonoBehaviour, ICell
     int _cellIndex;
 
     public static UnityAction<Color> OnClickColor;
+    public static UnityAction OnClick;
 
     private void Start()
     {
         _btn = GetComponent<Button>();
         _btn.onClick.AddListener(ButtonListener);
+        Cell.OnClick += RemoveColor;
+        
     }
+
 
 
     private void OnDisable()
     {
         _btn.onClick.RemoveListener(ButtonListener);
+        Cell.OnClick -= RemoveColor;
 
     }
 
@@ -39,8 +44,14 @@ public class Cell : MonoBehaviour, ICell
 
     public void ButtonListener()
     {
+        OnClick?.Invoke();
         _btn.image.color = Color.yellow;
         OnClickColor?.Invoke(_data.Color);
+    }
+
+    public void RemoveColor()
+    {
+        _btn.image.color = Color.white;
     }
 
 }

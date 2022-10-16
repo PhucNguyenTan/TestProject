@@ -81,7 +81,7 @@ public class VerticalScrollSystem
         float posX = 0f;
         float posY = 0f;
 
-        _cellHeight = _content.rect.width;
+        _cellWidth = _content.rect.width;
         _cellHeight = _prototypeCell.sizeDelta.y / _prototypeCell.sizeDelta.x * _cellWidth; //???
 
         float requiredCoverage = _minPoolCoverage * _viewPort.rect.height;
@@ -196,11 +196,4 @@ public class VerticalScrollSystem
         return new Vector2(0, n * _cellPool[_topMostCellIndex].sizeDelta.y);
     }
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(_recycleViewBounds.min - new Vector3(2000, 0), _recycleViewBounds.min + new Vector3(2000, 0));
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(_recycleViewBounds.max - new Vector3(2000, 0), _recycleViewBounds.max + new Vector3(2000, 0));
-    }
 }
