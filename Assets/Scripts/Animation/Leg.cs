@@ -8,22 +8,20 @@ public class Leg : MonoBehaviour
     float _lerpZ;
     float _max = 0.5f;
     float _min = -0.5f;
+    float _time;
+
+    private void Start()
+    {
+        _time = 0f;
+        _min = -0.5f;
+        _max = 0.5f;
+    }
 
     private void Update()
     {
-        var time = 0f;
-        if(_rotationPercent > 0.5f)
-        {
-            time = Mathf.InverseLerp(0.5f, 1f, _rotationPercent);
-            _lerpZ = Mathf.Lerp(_min, _max, time);
-        }
-        else if(_rotationPercent >= 0f)
-        {
-             time = Mathf.InverseLerp(0f, 0.5f, _rotationPercent);
-            _lerpZ = Mathf.Lerp(_max, _min, time);
-
-        }
-        //Debug.Log($"{_lerpZ} _ {_rotationPercent} _ {time}");
+        _lerpZ = _rotationPercent > 0.5f
+           ? Mathf.Lerp(_min, _max, Mathf.InverseLerp(0.5f, 1f, _rotationPercent))
+           : Mathf.Lerp(_max, _min, Mathf.InverseLerp(0f, 0.5f, _rotationPercent));
         transform.position = new Vector3(transform.position.x, transform.position.y, _lerpZ);
     }
 
