@@ -7,15 +7,11 @@ namespace TestProject.Animation
 {
     public class HumanAnim : MonoBehaviour
     {
-        [SerializeField] Leg _rLeg;
-        [SerializeField] Leg _lLeg;
         [SerializeField] StrideWheel _wheel;
-        // Todo
-        //_rArm
-        //_lArm
-        //_neck
-        //_spine
+        [SerializeField] HumanPose _walk;
+        [SerializeField] HumanPose _stand;
 
+        //CONTINUE HERE!
 
         float _rotationPercent;
         float _lerpZ;
