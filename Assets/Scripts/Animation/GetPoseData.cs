@@ -2,7 +2,8 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using Utilities;
+using Assets.Animation.Utilities;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(TestEditor))]
 public class GetPoseData : Editor
@@ -15,6 +16,10 @@ public class GetPoseData : Editor
     TestEditor tempClass;
     string dataName;
 
+    HumanPose human;
+
+    int currentPickerWindow;
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -22,25 +27,75 @@ public class GetPoseData : Editor
         tempClass = target as TestEditor;
         var transform = tempClass.gameObject.transform;
 
-        if (GUILayout.Button("Create Pose Data"))
+        EditorGUI.BeginChangeCheck();
+
+        //??? THis help create a HumanPose picker but don't quite know how it works.
+        human = EditorGUILayout.ObjectField("Loaded Pose", human, typeof(HumanPose), true) as HumanPose;
+
+        if (GUILayout.Button("Load Pose"))
+        {
+            if(human != null) {
+                LoadData(transform, human);
+            }
+        }
+
+        // ??? Should look into this maybe
+        //if (GUILayout.Button("Choose Object"))
+        //{
+            //{
+            //    //create a window picker control ID
+            //    currentPickerWindow = EditorGUIUtility.GetControlID(FocusType.Passive) + 100;
+
+            //    Object effectGO = null;
+
+            //    if (Event.current.commandName == "ObjectSelectorUpdated" && EditorGUIUtility.GetObjectPickerControlID() == currentPickerWindow)
+            //    {
+
+            //        effectGO = EditorGUIUtility.GetObjectPickerObject();
+            //        currentPickerWindow = -1;
+
+            //        //name of selected object from picker
+            //        Debug.Log(effectGO.name);
+            //    }
+            //}
+
+            ////use the ID you just created
+            //EditorGUIUtility.ShowObjectPicker<GameObject>(null, false, "ee", currentPickerWindow);
+        //}
+        
+
+
+        if (GUILayout.Button("Save Pose"))
         {
             if(transform == null)
             {
                 Debug.Log("Can't get transform of game object " + target.name);
+                return;
             }
             SaveData(transform, dataName);
-
-
         }
     }
 
-    private void LoadData()
+    private void LoadData(Transform parent, HumanPose pose)
     {
+        var llegPos = pose.LFootPos;
+        var rlegPos = pose.RFootPos;
+        var lleg = parent.RecursiveFindChild(_lleg + _target);
+        var rleg = parent.RecursiveFindChild(_rleg + _target);
+        lleg.localPosition = llegPos;
+        rleg.localPosition = rlegPos;
+
 
     }
 
     private void SaveData(Transform selectedGameObject, string name)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            Debug.LogError("Please add name before saving pose!");
+            return;
+        }
+
         var pose = ScriptableObject.CreateInstance<HumanPose>();
 
         if (selectedGameObject == null)
@@ -75,7 +130,7 @@ public class GetPoseData : Editor
         {
             return;
         }
-        pose.SetAllData(lleg.position, rleg.position);
+        pose.SetAllData(lleg.localPosition, rleg.localPosition);
 
     }
 }
