@@ -78,12 +78,16 @@ public class GetPoseData : Editor
 
     private void LoadData(Transform parent, HumanPose pose)
     {
-        var llegPos = pose.LFootPos;
-        var rlegPos = pose.RFootPos;
         var lleg = parent.RecursiveFindChild(_lleg + _target);
         var rleg = parent.RecursiveFindChild(_rleg + _target);
-        lleg.localPosition = llegPos;
-        rleg.localPosition = rlegPos;
+        var lhint = parent.RecursiveFindChild(_lleg + _hint);
+        var rhint = parent.RecursiveFindChild(_rleg + _hint);
+        lleg.localPosition = pose.LFootPos;
+        lleg.localEulerAngles = pose.LFootRot;
+        lhint.localPosition = pose.LLegHint;
+        rleg.localPosition = pose.RFootPos;
+        rleg.localEulerAngles = pose.RFootRot;
+        rhint.localPosition = pose.RLegHint;
 
 
     }
@@ -126,11 +130,19 @@ public class GetPoseData : Editor
     {
         var lleg = parent.RecursiveFindChild(_lleg + _target);
         var rleg = parent.RecursiveFindChild(_rleg + _target);
-        if(lleg == null || rleg == null)
+        var lhint = parent.RecursiveFindChild(_lleg + _hint);
+        var rhint = parent.RecursiveFindChild(_rleg + _hint);
+
+        if (lleg == null || rleg == null)
         {
             return;
         }
-        pose.SetAllData(lleg.localPosition, rleg.localPosition);
+        pose.SetAllData(lleg.localPosition,
+            lleg.localRotation.eulerAngles,
+            lhint.localPosition,
+            rleg.localPosition,
+            rleg.localRotation.eulerAngles,
+            rhint.localPosition);
 
     }
 }

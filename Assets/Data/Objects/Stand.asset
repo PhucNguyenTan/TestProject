@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e243a13c97d54446a8314b70aab65a7, type: 3}
-  m_Name: Side
+  m_Name: Stand
   m_EditorClassIdentifier: 
-  LFootPos: {x: -1.335, y: 0.727, z: 0.379}
-  LLegHint: {x: 0, y: 0, z: 0}
-  LFootRot: {x: 0, y: 0, z: 0}
-  RFootPos: {x: 0, y: 0, z: 0}
-  RLegHint: {x: 0, y: 0, z: 0}
-  RFootRot: {x: 0, y: 0, z: 0}
+  LFootPos: {x: -0.259, y: -0.212, z: -0.024}
+  LLegHint: {x: -0.04, y: 0.985, z: 0.439}
+  LFootRot: {x: 305.14297, y: 20.998993, z: 180}
+  RFootPos: {x: 0.19300002, y: 0.097, z: 0.015}
+  RLegHint: {x: 0.21, y: 0.743, z: 0.221}
+  RFootRot: {x: 298.565, y: 359.051, z: 174.83601}
