@@ -1,20 +1,46 @@
 
+using System.IO;
 using UnityEditor;
 using UnityEngine;
+using Utilities;
 
-public class GetPoseData
+[CustomEditor(typeof(TestEditor))]
+public class GetPoseData : Editor
 {
     const string _lleg = "LLeg";
     const string _rleg = "RLeg";
     const string _target = "_target";
     const string _hint = "_hint";
     const string _path = "Assets/Data/Objects/";
+    TestEditor tempClass;
+    string dataName;
 
-
-    [MenuItem("Assets/Anim_Pose/Humanoid/Get Current Pose data", priority = 1001)]
-    private static void GetData()
+    public override void OnInspectorGUI()
     {
-        GameObject selectedGameObject = Selection.activeObject as GameObject;
+        base.OnInspectorGUI();
+        dataName = EditorGUILayout.TextField("Data name", dataName);
+        tempClass = target as TestEditor;
+        var transform = tempClass.gameObject.transform;
+
+        if (GUILayout.Button("Create Pose Data"))
+        {
+            if(transform == null)
+            {
+                Debug.Log("Can't get transform of game object " + target.name);
+            }
+            SaveData(transform, dataName);
+
+
+        }
+    }
+
+    private void LoadData()
+    {
+
+    }
+
+    private void SaveData(Transform selectedGameObject, string name)
+    {
         var pose = ScriptableObject.CreateInstance<HumanPose>();
 
         if (selectedGameObject == null)
@@ -23,25 +49,33 @@ public class GetPoseData
             return;
         }
 
-        pose.Human = ExtractDataLimb(selectedGameObject.transform);
-        if (pose.Human == null)
+        if (pose == null)
         {
             Debug.LogError("Rig is incorrect, please check!");
             return;
         }
-        AssetDatabase.CreateAsset(pose, _path + Selection.activeContext.name);
+
+        var filePath = _path + name + ".asset";
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+
+        ExtractDataLimb(selectedGameObject, pose);
+
+        AssetDatabase.CreateAsset(pose, filePath);
         AssetDatabase.SaveAssets();
     }
 
-    private static HumanPart ExtractDataLimb(Transform parent)
+    private static void ExtractDataLimb(Transform parent, HumanPose pose)
     {
-        Transform lleg = parent.Find(_lleg + _target);
-        Transform rleg = parent.Find(_rleg + _target);
+        var lleg = parent.RecursiveFindChild(_lleg + _target);
+        var rleg = parent.RecursiveFindChild(_rleg + _target);
         if(lleg == null || rleg == null)
         {
-            return null;
+            return;
         }
-        return new HumanPart(lleg.position, rleg.position);
+        pose.SetAllData(lleg.position, rleg.position);
 
     }
 }
