@@ -11,6 +11,8 @@ namespace TestProject.Animation
         [SerializeField] HumanPose _poseWalkL;
         [SerializeField] HumanPose _poseWalkR;
         [SerializeField] HumanPose _poseStand;
+        [SerializeField] HumanPose _poseKneeL;
+        [SerializeField] HumanPose _poseKneeR;
 
         //CONTINUE HERE!
 

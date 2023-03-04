@@ -94,19 +94,15 @@ public class GetPoseData : Editor
         var tempLLegHint = pose.LLegHint;
         var tempLLegRot = pose.LFootRot;
 
-        lleg.localPosition = FlipX(pose.RFootPos);
-        lleg.localEulerAngles = pose.RFootRot;
-        lhint.localPosition = FlipX(pose.RLegHint);
+        lleg.localPosition = Vector3.Reflect(pose.RFootPos, Vector3.right);
+        lleg.localEulerAngles = Vector3.Reflect(pose.RFootRot, Vector3.forward);
+        lhint.localPosition = Vector3.Reflect(pose.RLegHint, Vector3.right);
 
-        rleg.localPosition = FlipX(tempLLegPos);
-        rleg.localEulerAngles = tempLLegRot;
-        rhint.localPosition = FlipX(tempLLegHint);
+        rleg.localPosition = Vector3.Reflect(tempLLegPos, Vector3.right);
+        rleg.localEulerAngles = Vector3.Reflect(tempLLegRot, Vector3.forward);
+        rhint.localPosition = Vector3.Reflect(tempLLegHint, Vector3.right);
     }
 
-    Vector3 FlipX(Vector3 toFlip)
-    {
-        return new Vector3(-toFlip.x, toFlip.y, toFlip.z);
-    }
 
     void LoadData(Transform parent, HumanPose pose)
     {
