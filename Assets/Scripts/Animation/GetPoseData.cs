@@ -18,8 +18,6 @@ public class GetPoseData : Editor
 
     HumanPose human;
 
-    int currentPickerWindow;
-
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -36,6 +34,15 @@ public class GetPoseData : Editor
         {
             if(human != null) {
                 LoadData(transform, human);
+            }
+        }
+
+        if(GUILayout.Button("Flip Pose"))
+        {
+            if(human != null)
+            {
+                FlipData(transform, human);
+                SaveData(transform, dataName);
             }
         }
 
@@ -69,30 +76,54 @@ public class GetPoseData : Editor
         {
             if(transform == null)
             {
-                Debug.Log("Can't get transform of game object " + target.name);
+                Debug.Log("Can't get transform of game object  " + target.name);
                 return;
             }
             SaveData(transform, dataName);
         }
     }
 
-    private void LoadData(Transform parent, HumanPose pose)
+    void FlipData(Transform parent, HumanPose pose)
     {
         var lleg = parent.RecursiveFindChild(_lleg + _target);
         var rleg = parent.RecursiveFindChild(_rleg + _target);
         var lhint = parent.RecursiveFindChild(_lleg + _hint);
         var rhint = parent.RecursiveFindChild(_rleg + _hint);
+
+        var tempLLegPos = pose.LFootPos;
+        var tempLLegHint = pose.LLegHint;
+        var tempLLegRot = pose.LFootRot;
+
+        lleg.localPosition = FlipX(pose.RFootPos);
+        lleg.localEulerAngles = pose.RFootRot;
+        lhint.localPosition = FlipX(pose.RLegHint);
+
+        rleg.localPosition = FlipX(tempLLegPos);
+        rleg.localEulerAngles = tempLLegRot;
+        rhint.localPosition = FlipX(tempLLegHint);
+    }
+
+    Vector3 FlipX(Vector3 toFlip)
+    {
+        return new Vector3(-toFlip.x, toFlip.y, toFlip.z);
+    }
+
+    void LoadData(Transform parent, HumanPose pose)
+    {
+        var lleg = parent.RecursiveFindChild(_lleg + _target);
+        var rleg = parent.RecursiveFindChild(_rleg + _target);
+        var lhint = parent.RecursiveFindChild(_lleg + _hint);
+        var rhint = parent.RecursiveFindChild(_rleg + _hint);
+
         lleg.localPosition = pose.LFootPos;
         lleg.localEulerAngles = pose.LFootRot;
         lhint.localPosition = pose.LLegHint;
         rleg.localPosition = pose.RFootPos;
         rleg.localEulerAngles = pose.RFootRot;
         rhint.localPosition = pose.RLegHint;
-
-
     }
 
-    private void SaveData(Transform selectedGameObject, string name)
+    void SaveData(Transform selectedGameObject, string name)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -126,7 +157,7 @@ public class GetPoseData : Editor
         AssetDatabase.SaveAssets();
     }
 
-    private static void ExtractDataLimb(Transform parent, HumanPose pose)
+    static void ExtractDataLimb(Transform parent, HumanPose pose)
     {
         var lleg = parent.RecursiveFindChild(_lleg + _target);
         var rleg = parent.RecursiveFindChild(_rleg + _target);

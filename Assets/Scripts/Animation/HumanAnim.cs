@@ -8,8 +8,9 @@ namespace TestProject.Animation
     public class HumanAnim : MonoBehaviour
     {
         [SerializeField] StrideWheel _wheel;
-        [SerializeField] HumanPose _walk;
-        [SerializeField] HumanPose _stand;
+        [SerializeField] HumanPose _poseWalkL;
+        [SerializeField] HumanPose _poseWalkR;
+        [SerializeField] HumanPose _poseStand;
 
         //CONTINUE HERE!
 
