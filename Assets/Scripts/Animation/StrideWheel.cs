@@ -13,22 +13,40 @@ namespace TestProject.Animation.Manager
         [SerializeField]
         KeyCode _backKey = KeyCode.S;
         [SerializeField]
-        float _speed;
+        float _acceleration = 1f;
+        [SerializeField]
+        float _maxSpeed = 5f;
+        [SerializeField]
+        float _velocity;
+
+        private void Start()
+        {
+            _velocity = 0;
+        }
 
         private void Update()
         {
             var forward = Input.GetKey(_forwardKey);
             var backward = Input.GetKey(_backKey);
-            if ((forward && backward) || (!forward && !backward)) return;
+            if ((forward && backward) || (!forward && !backward))
+            {
+                if (_velocity == 0) return;
+                _velocity = _velocity < 0 ?
+                    _velocity + _acceleration * Time.deltaTime :
+                    _velocity - _acceleration * Time.deltaTime;
+            }
 
             if (forward)
             {
-                transform.Rotate(Time.deltaTime * _speed, 0f, 0f);
+                
+                _velocity = Mathf.Min( _velocity + _acceleration * Time.deltaTime, _maxSpeed);
             }
-            else
+            else if(backward)
             {
-                transform.Rotate(-Time.deltaTime * _speed, 0f, 0f);
+                _velocity = Mathf.Max(_velocity - _acceleration * Time.deltaTime, -_maxSpeed);
             }
+
+            transform.Rotate(Time.deltaTime * _velocity, 0f, 0f);
             CurrentRotation?.Invoke(transform);
         }
     }
