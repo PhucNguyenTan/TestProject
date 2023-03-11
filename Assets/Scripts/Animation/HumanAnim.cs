@@ -44,14 +44,34 @@ namespace TestProject.Animation
             //   ? Mathf.Lerp(_min, _max, Mathf.InverseLerp(0.5f, 1f, _rotationPercent))
             //   : Mathf.Lerp(_max, _min, Mathf.InverseLerp(0f, 0.5f, _rotationPercent));
             //transform.position = new Vector3(transform.position.x, transform.position.y, _lerpZ);
-            if (IsInRange(_rotationPercent, 0, 0.25f) && _currentPose != _poseKneeL)
-                SetPose(_poseKneeL);
-            else if (IsInRange(_rotationPercent, 0.25f, 0.5f) && _currentPose != _poseWalkL)
-                SetPose(_poseWalkL);
-            else if (IsInRange(_rotationPercent, 0.5f, 0.75f) && _currentPose != _poseKneeR)
-                SetPose(_poseKneeR);
-            else if (IsInRange(_rotationPercent, 0.75f, 1f) && _currentPose != _poseWalkR)
-                SetPose(_poseWalkR);
+            if (IsInRange(_rotationPercent, 0, 0.2f))
+            {
+                SetPose(InterpolatePoses(_poseStand, _poseKneeL,
+                    Mathf.InverseLerp(0, 0.2f, _rotationPercent)));
+            }
+            else if (IsInRange(_rotationPercent, 0.2f, 0.4f))
+            {
+                SetPose(InterpolatePoses(_poseKneeL, _poseWalkL,
+                    Mathf.InverseLerp(0.2f, 0.4f, _rotationPercent)));
+            }
+            else if (IsInRange(_rotationPercent, 0.4f, 0.6f))
+            {
+                _currentPose = _poseStand;
+                SetPose(InterpolatePoses(_poseWalkL, _poseKneeR,
+                    Mathf.InverseLerp(0.4f, 0.6f, _rotationPercent)));
+            }
+            else if (IsInRange(_rotationPercent, 0.6f, 0.8f))
+            {
+                _currentPose = _poseStand;
+                SetPose(InterpolatePoses(_poseKneeR, _poseWalkR,
+                    Mathf.InverseLerp(0.6f, 0.8f, _rotationPercent)));
+            }
+            else if (IsInRange(_rotationPercent, 0.8f, 1f))
+            {
+                _currentPose = _poseStand;
+                SetPose(InterpolatePoses(_poseWalkR, _poseStand,
+                    Mathf.InverseLerp(0.8f, 1f, _rotationPercent)));
+            }
         }
 
         private void OnEnable()
@@ -75,17 +95,42 @@ namespace TestProject.Animation
         {
             _footL.localPosition = pose.LFootPos;
             _footR.localPosition = pose.RFootPos;
-            _footL.localEulerAngles = pose.LFootRot;
-            _footR.localEulerAngles = pose.RFootRot;
+            _footL.localRotation = pose.LFootRot;
+            _footR.localRotation = pose.RFootRot;
             _legL.localPosition = pose.LLegHint;
             _legR.localPosition = pose.RLegHint;
-            _currentPose = pose;
+        }
+
+        HumanPose InterpolatePoses(HumanPose ogPose, HumanPose toPose, float value)
+        {
+            var newPose = new HumanPose();
+            newPose.SetAllData(
+                Vector3.Lerp(ogPose.LFootPos, toPose.LFootPos, value),
+                Quaternion.Lerp(ogPose.LFootRot, toPose.LFootRot, value),
+                Vector3.Lerp(ogPose.LLegHint, toPose.LLegHint, value),
+                Vector3.Lerp(ogPose.RFootPos, toPose.RFootPos, value),
+                Quaternion.Lerp(ogPose.RFootRot, toPose.RFootRot, value),
+                Vector3.Lerp(ogPose.RLegHint, toPose.RLegHint, value));
+            return newPose;
         }
 
         bool IsInRange(float value, float min, float max)
         {
             return Mathf.Clamp(value, min, max) == value;
         }
+
+        //Vector3 SetFootRotation(Vector3 ogRot, Vector3 toRot)
+        //{
+        //    var rotationDif = Quaternion.FromToRotation(ogRot, toRot);
+        //    if(rotationDif.eulerAngles.y > 180f)
+        //    {
+        //        rotationDif.eulerAngles.y > 180f
+        //    }
+        //    else
+        //    {
+                
+        //    }
+        //}
     }
 
 }

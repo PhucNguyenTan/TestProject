@@ -95,11 +95,11 @@ public class GetPoseData : Editor
         var tempLLegRot = pose.LFootRot;
 
         lleg.localPosition = Vector3.Reflect(pose.RFootPos, Vector3.right);
-        lleg.localEulerAngles = Vector3.Reflect(pose.RFootRot, Vector3.forward);
+        lleg.localRotation = new Quaternion(pose.LFootRot.x, -pose.LFootRot.y, pose.LFootRot.z, pose.LFootRot.w);
         lhint.localPosition = Vector3.Reflect(pose.RLegHint, Vector3.right);
 
         rleg.localPosition = Vector3.Reflect(tempLLegPos, Vector3.right);
-        rleg.localEulerAngles = Vector3.Reflect(tempLLegRot, Vector3.forward);
+        rleg.localRotation = new Quaternion(pose.LFootRot.x, -pose.LFootRot.y, pose.LFootRot.z, pose.LFootRot.w);
         rhint.localPosition = Vector3.Reflect(tempLLegHint, Vector3.right);
     }
 
@@ -112,10 +112,10 @@ public class GetPoseData : Editor
         var rhint = parent.RecursiveFindChild(_rleg + _hint);
 
         lleg.localPosition = pose.LFootPos;
-        lleg.localEulerAngles = pose.LFootRot;
+        lleg.localRotation = pose.LFootRot;
         lhint.localPosition = pose.LLegHint;
         rleg.localPosition = pose.RFootPos;
-        rleg.localEulerAngles = pose.RFootRot;
+        rleg.localRotation = pose.RFootRot;
         rhint.localPosition = pose.RLegHint;
     }
 
@@ -165,10 +165,10 @@ public class GetPoseData : Editor
             return;
         }
         pose.SetAllData(lleg.localPosition,
-            lleg.localRotation.eulerAngles,
+            lleg.localRotation,
             lhint.localPosition,
             rleg.localPosition,
-            rleg.localRotation.eulerAngles,
+            rleg.localRotation,
             rhint.localPosition);
 
     }

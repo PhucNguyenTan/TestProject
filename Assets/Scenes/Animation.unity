@@ -467,8 +467,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _forwardKey: 119
   _backKey: 115
-  _acceleration: 1
-  _maxSpeed: 5
+  _acceleration: 100
+  _maxSpeed: 500
+  _velocity: 0
 --- !u!1001 &691404759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,6 +491,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.439
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719619260354657928, guid: 91715c761f5afdc4380915166fffe770,
+        type: 3}
+      propertyPath: m_Data.m_MaintainTargetRotationOffset
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1756186727347456061, guid: 91715c761f5afdc4380915166fffe770,
         type: 3}
@@ -580,6 +586,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621299807847389102, guid: 91715c761f5afdc4380915166fffe770,
+        type: 3}
+      propertyPath: m_Weight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5621299807847389102, guid: 91715c761f5afdc4380915166fffe770,
         type: 3}
@@ -749,6 +760,11 @@ PrefabInstance:
     - target: {fileID: 5886316664442590863, guid: 91715c761f5afdc4380915166fffe770,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388354286584723888, guid: 91715c761f5afdc4380915166fffe770,
+        type: 3}
+      propertyPath: m_Data.m_MaintainTargetRotationOffset
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6581518193732649480, guid: 91715c761f5afdc4380915166fffe770,
