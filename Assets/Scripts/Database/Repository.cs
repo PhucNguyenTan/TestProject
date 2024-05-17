@@ -27,11 +27,6 @@ namespace Test.Database.Repository
         }
     }
 
-    public sealed class ItemRepoSitory : BaseRepository<Item>
-    {
-        public ItemRepoSitory(string path) : base(path){}
-    }
-
     public sealed class ItemQuantityModel
     {
         public Item item        = null;
@@ -48,7 +43,8 @@ namespace Test.Database.Repository
     {
         public Dictionary<int, List<ItemQuantityModel>> datas = null;
 
-        public ItemGroupRepository(ItemRepoSitory itemRepository, string path)
+
+        public ItemGroupRepository(BaseRepository<Item> itemRepository, string path)
         {
             var itemGroups = JsonHelper.ReadDatas<ItemGroup>(path);
             foreach(var itemGroup in itemGroups)
@@ -62,13 +58,6 @@ namespace Test.Database.Repository
                 }).ToList();
                 datas.Add(itemGroup.id, itemQuantities);
             }
-        }
-    }
-
-    public sealed class ItemExchangeRepository : BaseRepository<ItemExchange>
-    {
-        public ItemExchangeRepository(string path) : base(path)
-        {
         }
     }
 }
