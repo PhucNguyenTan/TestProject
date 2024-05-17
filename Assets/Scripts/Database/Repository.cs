@@ -65,5 +65,10 @@ namespace Test.Database.Repository
         }
     }
 
-    public sealed class 
+    public sealed class ItemExchangeRepository : BaseRepository<ItemExchange>
+    {
+        public ItemExchangeRepository(string path) : base(path)
+        {
+        }
+    }
 }
