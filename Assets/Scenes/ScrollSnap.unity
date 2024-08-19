@@ -688,13 +688,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7e9ad5760aab1419a1eee695425ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnL: {fileID: 1597014225}
+  btnR: {fileID: 1760138485}
   textPrefab: {fileID: 8349018085300177868, guid: 8ba16e1c64f7c8747b2a14b74c01b1b2,
     type: 3}
   content: {fileID: 997002449}
+  scrollSnap: {fileID: 1555930208}
   scrollSpeed: 3
-  btnL: {fileID: 1597014225}
-  btnR: {fileID: 1760138485}
-  scrollRect: {fileID: 1555930208}
 --- !u!1 &997002448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,7 +1172,6 @@ GameObject:
   - component: {fileID: 1555930207}
   - component: {fileID: 1555930206}
   - component: {fileID: 1555930208}
-  - component: {fileID: 1555930209}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -1249,7 +1248,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1555930203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 389d9330e98e91c41b4baab81ac5d23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 997002449}
@@ -1259,7 +1258,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 35
+  m_ScrollSensitivity: 1
   m_Viewport: {fileID: 1281582959}
   m_HorizontalScrollbar: {fileID: 1619054329}
   m_VerticalScrollbar: {fileID: 0}
@@ -1270,19 +1269,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1555930209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555930203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d513af5442635343b92dfabc3289686, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEndDrag:
+  OnEndDragging:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNext:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPrev:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1597014223

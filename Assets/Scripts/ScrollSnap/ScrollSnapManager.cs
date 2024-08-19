@@ -18,7 +18,7 @@ public class ScrollSnapManager : MonoBehaviour
     public Button       btnR;
     public TMP_Text     textPrefab;
     public Transform    content;
-    public ScrollRect   scrollRect;
+    public ScrollSnap   scrollSnap;
     public float        scrollSpeed = 1f;
 
     private Scrollbar   scrollbar;
@@ -34,8 +34,7 @@ public class ScrollSnapManager : MonoBehaviour
 
     private void Start()
     {
-        scrollbar       = scrollRect.horizontalScrollbar;
-        scrollRectEvent = scrollRect.gameObject.GetComponent<ScrollRectEvent>();
+        scrollbar = scrollSnap.horizontalScrollbar;
         RegisterActions();
         Setup();
     }
@@ -75,7 +74,9 @@ public class ScrollSnapManager : MonoBehaviour
     {
         btnL.onClick.AddListener(GoLeft);
         btnR.onClick.AddListener(GoRight);
-        scrollRectEvent.OnEndDrag.AddListener(Snap);
+        scrollSnap.OnEndDragging.AddListener(Snap);
+        scrollSnap.OnNext.AddListener(GoRight);
+        scrollSnap.OnPrev.AddListener(GoLeft);
     }
 
     private void Snap()
