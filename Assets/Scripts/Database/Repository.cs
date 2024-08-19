@@ -54,7 +54,7 @@ namespace Test.Database.Repository
                 var itemQuantities = itemGroup.itemQuantities.Select(iq =>
                 {
                     var item = itemRepository.GetData(iq.item_id);
-                    return new ItemQuantityModel(item, iq.quantity);
+                    return new ItemQuantityModel(item, iq.quantity);  
                 }).ToList();
                 datas.Add(itemGroup.id, itemQuantities);
             }

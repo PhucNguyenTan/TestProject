@@ -28,7 +28,7 @@ namespace Test.Database.Helper
         {
             using (var writer = new StreamWriter(path))
             {
-                var wrapper = new Wrapper<T> { Items = datas };
+                var wrapper = new Wrapper<T> { Datas = datas };
                 var json = JsonUtility.ToJson(wrapper, true);
                 writer.Write(json);
             }
